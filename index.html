@@ -1,0 +1,82 @@
+<!doctype html>
+<html amp lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+    <title>Hello, AMPs</title>
+    <link rel="canonical" href="https://amp.dev/documentation/guides-and-tutorials/start/create/basic_markup/">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "NewsArticle",
+        "headline": "Open-source framework for publishing content",
+        "datePublished": "2015-10-07T12:02:41Z",
+        "image": [
+          "logo.jpg"
+        ]
+      }
+    </script>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <style amp-custom>
+      * {
+        font-family: 'Roboto Mono', monospace;
+      }
+
+      body {
+        background-color: #fafafa;
+      }
+
+      #primary-content-wrapper {
+        max-width: 640px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 24px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+
+      #primary-content-wrapper h1 {
+        position: absolute;
+        z-index: 1;
+        font-size: 72px;
+        margin: 0;
+      }
+
+      #primary-content {
+        box-shadow: 0 24px 48px 0 rgba(102, 199, 255, 0.75);
+        width: 100%;
+        z-index: 2;
+        position: relative;
+        margin-top: 74px;
+        background-color: #ffffff;
+        padding: 4px 12px 12px 12px;
+        border-radius: 8px;
+      }
+
+      #primary-content h2 {
+        margin: 0;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+      <div id="primary-content-wrapper">
+        <h1>to.</h1>
+        <div id="primary-content">
+          <h2>url shortener</h2>
+          <form method="post" action-xhr="https://localhost:8181/" target="_top">
+            <fieldset>
+              <label>Long Link</label>
+              <input type="text" name="url" required>
+              <br>
+              <input type="submit" value="Make it short!">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+  </body>
+</html>
