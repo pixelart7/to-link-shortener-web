@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { base64encode, base64decode } = require('nodejs-base64');
 
 function parsePost (body) { // too simple that my prof will prob kill me
   const res = {};
@@ -24,7 +25,7 @@ exports.handler = async (event, context) => {
   console.log(event.body)
 
   let body;
-  if (event.isBase64Encoded) body = atob(event.body)
+  if (event.isBase64Encoded) body = base64decode(event.body)
   else body = event.body
   const post = parsePost(event.body)
   console.log(post)
