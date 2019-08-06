@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+    <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+    <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
     <title>Hello, AMPs</title>
     <link rel="canonical" href="https://amp.dev/documentation/guides-and-tutorials/start/create/basic_markup/">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <script type="application/ld+json">
       {
@@ -23,18 +25,19 @@
     <style amp-custom>
       * {
         font-family: 'Roboto Mono', monospace;
+        box-sizing: border-box;
       }
 
       body {
-        background-color: #fafafa;
+        /* background-color: #fafafa; */
+        background-color: #121212;
       }
 
       #primary-content-wrapper {
-        max-width: 640px;
+        max-width: 420px;
         width: 100%;
         margin: 0 auto;
         padding: 24px;
-        box-sizing: border-box;
         position: relative;
         z-index: 1;
       }
@@ -44,39 +47,303 @@
         z-index: 1;
         font-size: 72px;
         margin: 0;
+        animation: 1.5s entry-h1 1;
+        color: #ffffff;
+        animation-fill-mode: forwards;
       }
 
       #primary-content {
-        box-shadow: 0 24px 48px 0 rgba(102, 199, 255, 0.75);
         width: 100%;
         z-index: 2;
         position: relative;
         margin-top: 74px;
-        background-color: #ffffff;
         padding: 4px 12px 12px 12px;
         border-radius: 8px;
+        animation: 1.5s entry-primary-content 1;
+        animation-delay: 1.5s;
+        animation-fill-mode: forwards;
+      }
+
+      #urlform {
+        opacity: 1.0;
+        animation: 3s entry-form 1;
+        /* animation-fill-mode: forwards; */
+        padding-top: 32px;
+        transform-style: preserve-3d;
+        transition: transform 0.1s;
+        /* padding-bottom: 8px; */
+      }
+
+      #urlform.amp-form-submitting, #urlform.amp-form-submit-success {
+        transform: scale(0.95)
+      }
+
+      #urlform .loading-indicator {
+        opacity: 0.0;
+        pointer-events: none;
+        transition: opacity 0.5s, transform 0.1s;
+        position: absolute;
+        z-index: 5;
+        top: 0; bottom: 0; left: 0; right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+        transform: scale(1.2);
+      }
+
+      #urlform.amp-form-submitting .loading-indicator, #urlform.amp-form-submit-success .loading-indicator {
+        opacity: 1.0;
+        pointer-events: auto;
+        transform: scale(1.05);
       }
 
       #primary-content h2 {
         margin: 0;
         font-size: 16px;
+        margin-bottom: 16px;
+        display: inline-block;
+        animation: 3s entry-h2 1;
+        animation-fill-mode: forwards;
+        position: absolute;
+      }
+
+      #primary-content fieldset {
+        padding: 0;
+        border: 0;
+        margin: 0;
+      }
+
+      .field {
+        margin-bottom: 12px;
+      }
+
+      .field label {
+        font-size: 14px;
+        margin-bottom: 4px;
+        display: block;
+        color: #757575;
+        font-weight: 500;
+      }
+
+      .field select {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23121212%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .65em auto, 100%;
+      }
+
+      .field input, .field select, .field .input-group .expand {
+        display: block;
+        height: 36px;
+        padding: 0 8px;
+        border-radius: 6px 6px 0 0;
+        border: none;
+        background-color: #FAFAFA;
+        border-bottom: 2px solid #212121;
+        font-family: "Helvetica Neue", Helvetica, Arial, Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        min-width: 196px;
+        width: 100%;
+        transition: background 0.25s, border-color 0.25s;
+      }
+
+      .field input:focus, .field select:focus, .field input:focus + .expand {
+        background-color: #f0f0f0;
+        outline: none;
+        border-color: rgb(22, 158, 237)
+      }
+
+      .field .input-group {
+        display: flex;
+      }
+
+      .field .input-group .expand {
+        min-width: unset;
+        width: unset;
+        line-height: 35.5px;
+        color: #888888;
+      }
+
+      .field .input-group .expand.is-left {
+        border-top-right-radius: 0px;
+        padding-right: 1px;
+        order: 1;
+      }
+
+      .field .input-group .has-left-expand {
+        border-top-left-radius: 0px;
+        padding-left: 1px;
+      }
+
+      .field .input-group input {
+        min-width: unset;
+        order: 2;
+      }
+
+      .control {
+        text-align: right;
+      }
+
+      .btn {
+        border: 2px solid #212121;
+        background: #fff;
+        padding: 8px 16px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px 0 rgba(0,0,0,.25);
+        text-align: center;
+        transform: translateY(-1px);
+        cursor: pointer;
+        transition: transform 0.25s, background 0.25s;
+        font-size: 16px;
+      }
+
+      .btn:hover {
+        background: #fafafa;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+        transform: translateY(-2px);
+      }
+
+      .btn:active {
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.15);
+        transform: translateY(0) scale(.98);
+        background: #ebebeb;
+        outline: none;
+      }
+      @keyframes entry-primary-content {
+        0% {
+          background-color: rgba(255, 255, 255, 0.0);
+          box-shadow: none;
+          border: 1px solid rgba(102, 199, 255, 0);
+        }
+        75% {
+          background-color: rgba(255, 255, 255, 1.0);
+          box-shadow: 0 18px 36px 0 rgba(102, 199, 255, 0.5);
+          border: 1px solid rgba(102, 199, 255, 0);
+        }
+        100% {
+          border: 1px solid rgba(102, 199, 255, 1.0);
+          background-color: rgba(255, 255, 255, 1.0);
+          box-shadow: 0 12px 48px 0 rgba(102, 199, 255, 0.5), 8px -1px 24px 0 rgba(102, 199, 255, 0.1);
+        }
+      }
+      @keyframes entry-form {
+        0% {
+          opacity: 0.0;
+        }
+        50% {
+          opacity: 0.0;
+          transform-origin: 50% 0%;
+          transform: scale(1.05) rotateX(15deg);
+        }
+        100% {
+          opacity: 1.0;
+          transform-origin: 50% 0%;
+          transform: scale(1) rotateX(0deg);
+        }
+      }
+      @keyframes entry-h1 {
+        0% {
+          opacity: 0;
+          left: 40%;
+          color: rgba(102, 199, 255);
+          transform: translateX(-50%) translateY(48px) scale(2.0);
+        }
+        50% {
+          opacity: 1;
+          left: 40%;
+          color: rgba(102, 199, 255);
+          transform: translateX(-50%) translateY(48px) scale(2.0);
+        }
+        100% {
+          left: 24px;
+          transform: translateX(0%);
+        }
+      }
+      @keyframes entry-h2 {
+        0% {
+          opacity: 0;
+          left: 40%;
+          padding-left: 24px;
+          color: rgba(102, 199, 255);
+          transform: translateX(-50%) translateY(96px) scale(2.0);
+        }
+        25% {
+          opacity: 1;
+          left: 40%;
+          padding-left: 24px;
+          color: rgba(102, 199, 255);
+          transform: translateX(-50%) translateY(96px) scale(2.0);
+        }
+        50% {
+          left: 12px;
+          padding-left: 0px;
+          transform: translateX(0%);
+          color: #ffffff;
+        }
+        100% {
+          left: 12px;
+          transform: translateX(0%);
+          color: #121212;
+        }
       }
     </style>
   </head>
   <body>
-      <div id="primary-content-wrapper">
-        <h1>to.</h1>
-        <div id="primary-content">
-          <h2>url shortener</h2>
-          <form method="post" action-xhr="https://localhost:8181/" target="_top">
-            <fieldset>
-              <label>Long Link</label>
-              <input type="text" name="url" required>
-              <br>
-              <input type="submit" value="Make it short!">
-            </fieldset>
-          </form>
-        </div>
+    <div id="primary-content-wrapper">
+      <h1>to.</h1>
+      <div id="primary-content">
+        <h2>url shortener</h2>
+        <form id="urlform" method="post" action-xhr=".netlify/functions/shorten" target="_top">
+          <div class="loading-indicator">
+            <div submitting>shortening...</div>
+            <div submit-success style="text-align: center; width: 100%;">
+              <template type="amp-mustache">
+                Done! Access via:
+                <div class="field" style="width: 100%; margin-top: 8px;">
+                  <input style="text-align: center;" type="text" value="https://to.surge.sh/{{short}}">
+                </div>
+              </template>
+            </div>
+          </div>
+          <fieldset>
+            <div class="field">
+              <label for="url">
+                Long Link
+              </label>
+              <input type="url" id="url" name="url" required>
+            </div>
+            <div class="field">
+              <label for="short">
+                Shorten To
+              </label>
+              <div class="input-group">
+                <input class="has-left-expand" type="text" id="short" name="short" maxlength="10" pattern="^[a-zA-Z0-9_]*$">
+                <span class="expand is-left" role="button" tabindex="-1" on="tap:short.focus()">to.surge.sh/</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="ttl">Expires in</label>
+              <select name="ttl" id="ttl">
+                <option value="600">10 minutes</option>
+                <option value="1800">30 minutes</option>
+                <option value="3600">1 hour</option>
+                <option value="21600">6 hours</option>
+                <option value="86400">1 day</option>
+                <option value="259200">3 days</option>
+                <option value="604800" selected>7 days</option>
+              </select>
+            </div>
+            <div class="control">
+              <input class="btn" type="submit" value="Make it short!">
+            </div>
+          </fieldset>
+        </form>
       </div>
+    </div>
   </body>
 </html>
