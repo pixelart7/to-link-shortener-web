@@ -27,7 +27,7 @@ exports.handler = async (event, context) => {
   let body;
   if (event.isBase64Encoded) body = base64decode(event.body)
   else body = event.body
-  const post = parsePost(event.body)
+  const post = parsePost(body)
   console.log(post)
 
   let shortLink = ''
