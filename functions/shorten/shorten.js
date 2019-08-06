@@ -22,6 +22,10 @@ exports.handler = async (event, context) => {
 
   console.log(event)
   console.log(event.body)
+
+  let body;
+  if (event.isBase64Encoded) body = atob(event.body)
+  else body = event.body
   const post = parsePost(event.body)
   console.log(post)
 
