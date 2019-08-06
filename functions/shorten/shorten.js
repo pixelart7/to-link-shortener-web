@@ -19,6 +19,8 @@ exports.handler = async (event, context) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
+
+  console.log(event)
   console.log(event.body)
   const post = parsePost(event.body)
   console.log(post)
@@ -31,7 +33,7 @@ exports.handler = async (event, context) => {
   }
 
   const res = await axios.post(`https://kvdb.io/3B3pc1hjdDVThuWxJsVmbx/${encodeURI(shortLink)}?ttl=${encodeURI(post.ttl)}`, encodeURI(post.url))
-  console.log(res)
+
   if (res.status === 200) {
     return {
       statusCode: 200,
