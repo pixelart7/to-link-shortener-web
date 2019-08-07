@@ -114,6 +114,29 @@
         margin: 0;
       }
 
+      .info {
+        font-size: 12px;
+        color: rgb(255, 255, 255);
+        margin-top: 12px;
+        opacity: 0.0;
+        animation: 6s entry-info 1;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+      }
+
+      .info p {
+        margin-top: 4px;
+        margin-bottom: 8px;
+      }
+
+      .info p a {
+        color: rgb(255, 255, 255);
+      }
+
+      .info p a:hover {
+        opacity: 0.8;
+      }
+
       .field {
         margin-bottom: 12px;
       }
@@ -283,12 +306,33 @@
           left: 12px;
           padding-left: 0px;
           transform: translateX(0%);
-          color: #ffffff;
+          color: rgba(102, 199, 255);
         }
         100% {
           left: 12px;
           transform: translateX(0%);
           color: #121212;
+        }
+      }
+      @keyframes entry-info {
+        0% {
+          opacity: 0.0;
+        }
+        10% {
+          opacity: 0.0;
+          transform-origin: 50% 0%;
+          transform: scale(1.05) rotateX(15deg);
+        }
+        25% {
+          opacity: 0.95;
+          transform-origin: 50% 0%;
+          transform: scale(1) rotateX(0deg);
+        }
+        99% {
+          oapcity: 0.95;
+        }
+        100% {
+          opacity: 0.5;
         }
       }
     </style>
@@ -343,6 +387,11 @@
             </div>
           </fieldset>
         </form>
+      </div>
+      <div class="info">
+        <p>This service is not suitable for using it in production because people can replace the created link.</p>
+        <p>This is an educational project for <a href="https://pixelart7.github.io/" target="_blank">me</a> to learn the AMP framework with CSS animations built using <a href="https://surge.sh/" target="_blank">Surge</a>, <a href="https://www.netlify.com/"target="_blank" target="_blank">Netlify</a>, and <a href="https://kvdb.io/" target="_blank">KVdb</a>.</p>
+        <p>Available on Github: <a href="#" target="_blank">web</a>, <a href="#" target="_blank">worker</a></p>
       </div>
     </div>
   </body>
