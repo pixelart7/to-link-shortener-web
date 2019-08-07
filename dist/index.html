@@ -11,6 +11,7 @@
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
     <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     <link rel="canonical" href="https://to-url-shortener.netlify.com/">
     <title>to. link shortener</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700&display=swap" rel="stylesheet">
@@ -388,5 +389,17 @@
         <p>Available on Github: <a href="https://github.com/pixelart7/to-link-shortener-web" target="_blank">web</a>, <a href="https://github.com/pixelart7/to-link-shortener-surge-sh" target="_blank">worker</a></p>
       </div>
     </div>
+    <amp-analytics type="gtag" data-credentials="include">
+    <script type="application/json">
+    {
+      "vars" : {
+        "gtag_id": "UA-39827018-6",
+        "config" : {
+          "UA-39827018-6": { "groups": "default" }
+        }
+      }
+    }
+    </script>
+    </amp-analytics>
   </body>
 </html>
